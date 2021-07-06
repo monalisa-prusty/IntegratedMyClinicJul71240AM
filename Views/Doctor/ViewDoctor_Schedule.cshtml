@@ -1,0 +1,59 @@
+﻿@model IEnumerable<ClinicManagementProject.Models.DoctorSchedule>
+
+@{Layout = "~/views/Doctor/_Layout.cshtml";}
+
+<body>
+    <p>
+        <br /><br />
+        <b>Available bookings for you</b>
+    </p>
+    <form method="get" name="frmViewDoctorSchedule">
+        <table class="table" width="50%" align="center">
+            <thead>
+                <tr>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Time)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Patient.Name)
+                    </th>
+
+                    <th>
+                        Click to Start Consultation
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Time)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Patient.Name)
+        </td>
+
+        <td>
+            @Html.ActionLink("Doctor Consultations", "ConsultationUpdate", new { timeSlotId = item.Timeslot_Id, patId = item.Patient_Id, docId = item.Doctor_Id })
+            <input name="consDocId" type="hidden" value="@item.Doctor_Id" />
+        </td>
+    </tr> }
+                }
+                else
+                {
+    <tr>
+        <td colspan="2">
+            No Consultation slot booked for you
+        </td>
+    </tr>}
+
+            </tbody>
+        </table>
+</body>
